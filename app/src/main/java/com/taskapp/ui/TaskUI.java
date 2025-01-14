@@ -171,14 +171,13 @@ public class TaskUI {
                 System.out.println("1. タスクのステータス変更, 2. タスク削除, 3. メインメニューに戻る");
                 System.out.print("選択肢: ");
                 String select = reader.readLine();
-                System.out.println();
 
                 switch (select) {
                     case "1":
                         inputChangeInformation();
                         break;
                     case "2":
-                        // inputDeleteInformation();
+                        inputDeleteInformation();
                         break;
                     case "3":
                         System.out.println("メインメニューに戻ります。");
@@ -209,7 +208,7 @@ public class TaskUI {
                 System.out.print("ステータスを変更するタスクコードを入力してください：");
                 String taskCode = reader.readLine();
                 if (!isNumeric(taskCode)) {
-                    System.out.println("コードは半角の数字で入力してください\n");
+                    System.out.println("コードは半角の数字で入力してください。\n");
                     continue;
                 }
                 System.out.println("どのステータスに変更するか選択してください。");
@@ -238,30 +237,32 @@ public class TaskUI {
 
     /**
      * ユーザーからのタスク削除情報を受け取り、タスクを削除します。
+     * while処理の中で削除するタスクのコードを受け取る、バリデーションを実施。
+     * 削除するタスクコードをもとに、taskLogic.deleteを呼び出す
      *
      * @see #isNumeric(String)
      * @see com.taskapp.logic.TaskLogic#delete(int)
      */
-    // public void inputDeleteInformation() {
-    //     boolean flg = true;
-    //     while (flg) {
-    //         try {
-    //             System.out.print("削除するタスクコードを入力してください：");
-    //             String deleteTaskCode = reader.readLine();
-    //             if (!isNumeric(deleteTaskCode)) {
-    //                 System.out.println("コードは半角の数字で入力してください\n");
-    //                 continue;
-    //             }
-    //             taskLogic.delete(Integer.parseInt(deleteTaskCode));
-    //             flg = false;
-    //         } catch (IOException e)  {
-    //             e.printStackTrace();
-    //         } catch (AppException e) {
-    //             System.out.println(e.getMessage());
-    //         }
-    //     }
-    //     System.out.println();
-    // }
+    public void inputDeleteInformation() {
+        boolean flg = true;
+        while (flg) {
+            try {
+                System.out.print("削除するタスクコードを入力してください：");
+                String deleteTaskCode = reader.readLine();
+                if (!isNumeric(deleteTaskCode)) {
+                    System.out.println("コードは半角の数字で入力してください\n");
+                    continue;
+                }
+                taskLogic.delete(Integer.parseInt(deleteTaskCode));
+                flg = false;
+            } catch (IOException e)  {
+                e.printStackTrace();
+            } catch (AppException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        System.out.println();
+    }
 
     /**
      * 指定された文字列が数値であるかどうかを判定します。

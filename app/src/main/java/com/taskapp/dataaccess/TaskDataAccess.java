@@ -137,6 +137,9 @@ public class TaskDataAccess {
 
     /**
      * コードを基にタスクデータを削除します。
+     * findAllで現在のcsvをListにしたものを取得する
+     * 新たにfileに書き込みをしていく
+     * 引数として受け取ったcodeと、taskListのあるオブジェクトのcodeが一致する場合は、そのtaskの書き込みをスキップする
      * @param code 削除するタスクのコード
      */
     public void delete(int code) {

@@ -121,6 +121,10 @@ public class TaskLogic {
 
     /**
      * タスクを削除します。
+     * 受け取ったtaskCodeをもとに、findByCodeを用いて該当するタスクオブジェクトを取得する
+     * タスクオブジェクトがnullのとき、タスクオブジェクトのstatusが完了でないとき、AppExceptionを投げる
+     * 受け取ったtaskCodeをもとに、taskDataAccessのdelete、logDataAccessのdeleteを呼び出す
+     * 最後に、削除が完了したことを出力する
      *
      * @see com.taskapp.dataaccess.TaskDataAccess#findByCode(int)
      * @see com.taskapp.dataaccess.TaskDataAccess#delete(int)
@@ -128,17 +132,17 @@ public class TaskLogic {
      * @param code タスクコード
      * @throws AppException タスクコードが存在しない、またはタスクのステータスが完了でない場合にスローされます
      */
-    // public void delete(int code) throws AppException {
-    //     Task deleteTask = taskDataAccess.findByCode(code);
-    //     List<Log> log = logDataAccess.findAll();
-    //     if (deleteTask == null) {
-    //         throw new AppException("存在するタスクコードを入力してください");
-    //     }
-    //     if (deleteTask.getStatus() != 2) {
-    //         throw new AppException("ステータスが完了のタスクを選択してください");
-    //     }
-    //     taskDataAccess.delete(code);
-    //     logDataAccess.deleteByTaskCode(code);
-    //     System.out.println(deleteTask.getName() + "の削除が完了しました。");
-    // }
+    public void delete(int code) throws AppException {
+        Task deleteTask = taskDataAccess.findByCode(code);
+        List<Log> log = logDataAccess.findAll();
+        if (deleteTask == null) {
+            throw new AppException("存在するタスクコードを入力してください");
+        }
+        if (deleteTask.getStatus() != 2) {
+            throw new AppException("ステータスが完了のタスクを選択してください");
+        }
+        taskDataAccess.delete(code);
+        logDataAccess.deleteByTaskCode(code);
+        System.out.println(deleteTask.getName() + "の削除が完了しました。");
+    }
 }
