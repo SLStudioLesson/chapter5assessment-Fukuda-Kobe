@@ -52,5 +52,4 @@ public class Log {
 			return false;
 		return true;
 	}
-
- }
+}
